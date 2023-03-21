@@ -55,7 +55,7 @@ import com.deepoove.poi.xwpf.*;
  * 
  * @author Sayi
  */
-public class TemplateResolver extends AbstractResolver {
+public class TemplateResolver extends AbstractResolver<XWPFDocument, POIXMLDocumentPart> implements Resolver {
 
     private static Logger logger = LoggerFactory.getLogger(TemplateResolver.class);
 

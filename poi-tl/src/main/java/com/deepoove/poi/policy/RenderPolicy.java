@@ -15,12 +15,12 @@
  */
 package com.deepoove.poi.policy;
 
-import com.deepoove.poi.XWPFTemplate;
+import com.deepoove.poi.PoiTemplate;
 import com.deepoove.poi.template.ElementTemplate;
 
 /**
  * Do Anything Anywhere
- * 
+ *
  * @author Sayi
  * @version 0.0.1
  */
@@ -30,8 +30,8 @@ public interface RenderPolicy {
     /**
      * @param eleTemplate template tag
      * @param data        render data
-     * @param template    XWPFTemplate instance
+     * @param template    PoiTemplate instance
      */
-    void render(ElementTemplate eleTemplate, Object data, XWPFTemplate template);
+    void render(ElementTemplate eleTemplate, Object data, PoiTemplate<?> template);
 
 }

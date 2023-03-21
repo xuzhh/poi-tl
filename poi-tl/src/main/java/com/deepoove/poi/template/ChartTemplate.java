@@ -19,7 +19,6 @@ import java.util.List;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.xddf.usermodel.chart.*;
-import org.apache.poi.xwpf.usermodel.XWPFChart;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 import com.deepoove.poi.config.Configure;
@@ -29,25 +28,25 @@ import com.deepoove.poi.util.ChartUtils;
 import com.deepoove.poi.xwpf.XDDFOfPieChartData;
 
 /**
- * chart docx template element: XWPFChart
+ * chart docx template element: XDDFChart
  * 
  * @author Sayi
  * @version 1.8.0
  */
 public class ChartTemplate extends ElementTemplate {
 
-    protected XWPFChart chart;
+    protected XDDFChart chart;
     protected ChartTypes chartType;
     protected XWPFRun run;
 
-    public ChartTemplate(String tagName, XWPFChart chart, XWPFRun run) {
+    public ChartTemplate(String tagName, XDDFChart chart, XWPFRun run) {
         this.tagName = tagName;
         this.chart = chart;
         this.run = run;
         this.chartType = readChartType(this.chart);
     }
 
-    private ChartTypes readChartType(XWPFChart chart) {
+    private ChartTypes readChartType(XDDFChart chart) {
         List<XDDFChartData> chartSeries = ChartUtils.getChartSeries(chart);
         if (CollectionUtils.isEmpty(chartSeries)) {
             return null;
@@ -84,11 +83,11 @@ public class ChartTemplate extends ElementTemplate {
         return chartType;
     }
 
-    public XWPFChart getChart() {
+    public XDDFChart getChart() {
         return chart;
     }
 
-    public void setChart(XWPFChart chart) {
+    public void setChart(XDDFChart chart) {
         this.chart = chart;
     }
 

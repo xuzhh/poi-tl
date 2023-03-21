@@ -15,21 +15,22 @@
  */
 package com.deepoove.poi.resolver;
 
+import com.deepoove.poi.config.Configure;
+import com.deepoove.poi.util.RegexUtils;
+import org.apache.poi.ooxml.POIXMLDocument;
+import org.apache.poi.ooxml.POIXMLDocumentPart;
+
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import com.deepoove.poi.config.Configure;
-import com.deepoove.poi.util.RegexUtils;
-
 /**
  * initial pattern by config
- * 
+ *
  * @author Sayi
- * @version
  */
-public abstract class AbstractResolver implements Resolver {
+public abstract class AbstractResolver<D extends POIXMLDocument, P extends POIXMLDocumentPart> implements ExResolver<D, P> {
 
     protected final Configure config;
 
@@ -55,9 +56,9 @@ public abstract class AbstractResolver implements Resolver {
     }
 
     String getGramarRegex(Configure config) {
-        List<Character> gramerChar = new ArrayList<Character>(config.getGramerChars());
+        List<Character> gramerChar = new ArrayList<>(config.getGramerChars());
         StringBuilder reg = new StringBuilder("(");
-        for (int i = 0;; i++) {
+        for (int i = 0; ; i++) {
             Character chara = gramerChar.get(i);
             String word = RegexUtils.escapeExprSpecialWord(chara.toString());
             if (i == gramerChar.size() - 1) {

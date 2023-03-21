@@ -15,16 +15,15 @@
  */
 package com.deepoove.poi.plugin.toc;
 
-import org.apache.poi.xwpf.usermodel.XWPFFieldRun;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.apache.poi.xwpf.usermodel.XWPFRun;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTSimpleField;
-
-import com.deepoove.poi.XWPFTemplate;
+import com.deepoove.poi.PoiTemplate;
 import com.deepoove.poi.policy.RenderPolicy;
 import com.deepoove.poi.template.ElementTemplate;
 import com.deepoove.poi.template.run.RunTemplate;
 import com.deepoove.poi.xwpf.XWPFOnOff;
+import org.apache.poi.xwpf.usermodel.XWPFFieldRun;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTSimpleField;
 
 /**
  * Experimental: Table of contents
@@ -32,7 +31,7 @@ import com.deepoove.poi.xwpf.XWPFOnOff;
 public class TOCRenderPolicy implements RenderPolicy {
 
     @Override
-    public void render(ElementTemplate eleTemplate, Object data, XWPFTemplate template) {
+    public void render(ElementTemplate eleTemplate, Object data, PoiTemplate<?> template) {
         XWPFRun run = ((RunTemplate) eleTemplate).getRun();
         run.setText("", 0);
 

@@ -15,23 +15,25 @@
  */
 package com.deepoove.poi.render.processor;
 
-import java.util.List;
-import java.util.Objects;
-
+import com.deepoove.poi.PoiTemplate;
+import com.deepoove.poi.config.PreRenderDataCastor;
+import com.deepoove.poi.policy.RenderPolicy;
+import com.deepoove.poi.template.ElementTemplate;
 import org.apache.commons.lang3.ClassUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.deepoove.poi.XWPFTemplate;
-import com.deepoove.poi.config.PreRenderDataCastor;
-import com.deepoove.poi.policy.RenderPolicy;
-import com.deepoove.poi.template.ElementTemplate;
+import java.util.List;
+import java.util.Objects;
 
 public class DelegatePolicy {
 
+    private DelegatePolicy() {
+    }
+
     private static final Logger LOGGER = LoggerFactory.getLogger(DelegatePolicy.class);
 
-    public static void invoke(RenderPolicy policy, ElementTemplate eleTemplate, Object data, XWPFTemplate template) {
+    public static void invoke(RenderPolicy policy, ElementTemplate eleTemplate, Object data, PoiTemplate<?> template) {
         Objects.requireNonNull(policy, "Cannot find render policy: [" + eleTemplate.getTagName() + "]");
         Object model = data;
         List<PreRenderDataCastor> preRenderDataCastors = template.getConfig().getPreRenderDataCastors();

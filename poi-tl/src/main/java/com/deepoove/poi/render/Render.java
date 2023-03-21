@@ -15,16 +15,15 @@
  */
 package com.deepoove.poi.render;
 
-import com.deepoove.poi.XWPFTemplate;
+import com.deepoove.poi.PoiTemplate;
 
 /**
  * The interface of render
- * 
- * @author Sayi
  *
+ * @author Sayi
  */
 public interface Render {
 
-    void render(XWPFTemplate template, Object root);
+    void render(PoiTemplate<?> template, Object root);
 
 }

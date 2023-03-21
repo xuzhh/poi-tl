@@ -16,13 +16,13 @@
 
 package com.deepoove.poi.util;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.util.Objects;
-
+import com.deepoove.poi.exception.ReflectionException;
 import org.apache.commons.lang3.ClassUtils;
 
-import com.deepoove.poi.exception.ReflectionException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.Objects;
 
 public class ReflectionUtils {
 
@@ -52,6 +52,24 @@ public class ReflectionUtils {
                 field = searchType.getDeclaredField(name);
                 if (null != field) return field;
             } catch (NoSuchFieldException e) {
+                // no-op
+            }
+            searchType = searchType.getSuperclass();
+        }
+        return null;
+    }
+
+    public static Method findMethod(Class<?> clazz, String methodName, Class<?>... parametersTypes) {
+        Objects.requireNonNull(clazz, "Class must not be null");
+        Objects.requireNonNull(methodName, "MethodName must not be null");
+        Class<?> searchType = clazz;
+        while (Object.class != searchType && searchType != null) {
+            Method method;
+            try {
+                method = searchType.getDeclaredMethod(methodName, parametersTypes);
+                method.setAccessible(true);
+                return method;
+            } catch (NoSuchMethodException e) {
                 // no-op
             }
             searchType = searchType.getSuperclass();

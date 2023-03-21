@@ -155,7 +155,7 @@ public class IterableProcessor extends AbstractIterableProcessor {
         }
 
         // re-parse
-        List<MetaTemplate> templates = this.resolver.resolveBodyElements(copies);
+        List<MetaTemplate> templates = ((Resolver) this.resolver).resolveBodyElements(copies);
 
         // render
         process(templates, model);

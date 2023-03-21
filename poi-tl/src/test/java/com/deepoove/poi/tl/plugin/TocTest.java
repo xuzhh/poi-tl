@@ -1,25 +1,24 @@
 package com.deepoove.poi.tl.plugin;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.HashMap;
-
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.apache.poi.xwpf.usermodel.XWPFRun;
-import org.apache.poi.xwpf.usermodel.XWPFStyles;
-import org.junit.jupiter.api.Test;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTP;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTSimpleField;
-
+import com.deepoove.poi.PoiTemplate;
 import com.deepoove.poi.XWPFTemplate;
 import com.deepoove.poi.config.Configure;
 import com.deepoove.poi.policy.RenderPolicy;
 import com.deepoove.poi.template.ElementTemplate;
 import com.deepoove.poi.template.run.RunTemplate;
 import com.deepoove.poi.xwpf.XWPFOnOff;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.poi.xwpf.usermodel.XWPFStyles;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTP;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTSimpleField;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
 
 public class TocTest {
 
@@ -59,7 +58,7 @@ public class TocTest {
 
             @SuppressWarnings("deprecation")
             @Override
-            public void render(ElementTemplate eleTemplate, Object data, XWPFTemplate template) {
+            public void render(ElementTemplate eleTemplate, Object data, PoiTemplate<?> template) {
                 XWPFRun run = ((RunTemplate) eleTemplate).getRun();
                 run.setText("", 0);
                 XWPFParagraph tocPara = run.getParagraph();

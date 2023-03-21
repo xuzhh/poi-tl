@@ -110,7 +110,7 @@ public class InlineIterableProcessor extends AbstractIterableProcessor {
         }
 
         // re-parse
-        List<MetaTemplate> templates = this.resolver.resolveXWPFRuns(copies);
+        List<MetaTemplate> templates = ((Resolver)this.resolver).resolveXWPFRuns(copies);
 
         // render
         process(templates, model);

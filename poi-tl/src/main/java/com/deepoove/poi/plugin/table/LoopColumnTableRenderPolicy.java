@@ -15,11 +15,19 @@
  */
 package com.deepoove.poi.plugin.table;
 
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
+import com.deepoove.poi.PoiTemplate;
+import com.deepoove.poi.exception.RenderException;
+import com.deepoove.poi.policy.RenderPolicy;
+import com.deepoove.poi.render.compute.EnvModel;
+import com.deepoove.poi.render.compute.RenderDataCompute;
+import com.deepoove.poi.render.processor.DocumentProcessor;
+import com.deepoove.poi.render.processor.EnvIterator;
+import com.deepoove.poi.resolver.TemplateResolver;
+import com.deepoove.poi.template.ElementTemplate;
+import com.deepoove.poi.template.MetaTemplate;
+import com.deepoove.poi.template.run.RunTemplate;
+import com.deepoove.poi.util.ReflectionUtils;
+import com.deepoove.poi.util.TableTools;
 import org.apache.poi.xwpf.usermodel.IBody;
 import org.apache.poi.xwpf.usermodel.TableWidthType;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
@@ -36,19 +44,10 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblGridCol;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTc;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTcPr;
 
-import com.deepoove.poi.XWPFTemplate;
-import com.deepoove.poi.exception.RenderException;
-import com.deepoove.poi.policy.RenderPolicy;
-import com.deepoove.poi.render.compute.EnvModel;
-import com.deepoove.poi.render.compute.RenderDataCompute;
-import com.deepoove.poi.render.processor.DocumentProcessor;
-import com.deepoove.poi.render.processor.EnvIterator;
-import com.deepoove.poi.resolver.TemplateResolver;
-import com.deepoove.poi.template.ElementTemplate;
-import com.deepoove.poi.template.MetaTemplate;
-import com.deepoove.poi.template.run.RunTemplate;
-import com.deepoove.poi.util.ReflectionUtils;
-import com.deepoove.poi.util.TableTools;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Hack for loop table column
@@ -80,7 +79,7 @@ public class LoopColumnTableRenderPolicy implements RenderPolicy {
     }
 
     @Override
-    public void render(ElementTemplate eleTemplate, Object data, XWPFTemplate template) {
+    public void render(ElementTemplate eleTemplate, Object data, PoiTemplate<?> template) {
         RunTemplate runTemplate = (RunTemplate) eleTemplate;
         XWPFRun run = runTemplate.getRun();
         try {

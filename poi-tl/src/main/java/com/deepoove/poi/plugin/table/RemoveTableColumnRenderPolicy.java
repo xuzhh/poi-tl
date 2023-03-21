@@ -1,8 +1,11 @@
 package com.deepoove.poi.plugin.table;
 
-import java.math.BigInteger;
-import java.util.List;
-
+import com.deepoove.poi.PoiTemplate;
+import com.deepoove.poi.policy.RenderPolicy;
+import com.deepoove.poi.template.ElementTemplate;
+import com.deepoove.poi.template.run.RunTemplate;
+import com.deepoove.poi.util.ReflectionUtils;
+import com.deepoove.poi.util.TableTools;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
@@ -11,17 +14,13 @@ import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTDecimalNumber;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTcPr;
 
-import com.deepoove.poi.XWPFTemplate;
-import com.deepoove.poi.policy.RenderPolicy;
-import com.deepoove.poi.template.ElementTemplate;
-import com.deepoove.poi.template.run.RunTemplate;
-import com.deepoove.poi.util.ReflectionUtils;
-import com.deepoove.poi.util.TableTools;
+import java.math.BigInteger;
+import java.util.List;
 
 public class RemoveTableColumnRenderPolicy implements RenderPolicy {
 
     @Override
-    public void render(ElementTemplate eleTemplate, Object data, XWPFTemplate template) {
+    public void render(ElementTemplate eleTemplate, Object data, PoiTemplate<?> template) {
         RunTemplate runTemplate = (RunTemplate) eleTemplate;
         XWPFRun run = runTemplate.getRun();
         try {

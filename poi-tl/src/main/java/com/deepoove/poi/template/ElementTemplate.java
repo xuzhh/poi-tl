@@ -20,10 +20,11 @@ import com.deepoove.poi.policy.RenderPolicy;
 
 /**
  * sign + tagName == source
- * 
+ *
  * @author Sayi
  */
 public abstract class ElementTemplate implements MetaTemplate {
+
     protected Character sign;
     protected String tagName;
     protected String source;
@@ -71,6 +72,12 @@ public abstract class ElementTemplate implements MetaTemplate {
         return source;
     }
 
-    public abstract RenderPolicy findPolicy(Configure config);
+    public RenderPolicy findPolicy(Configure config) {
+        RenderPolicy policy = config.getCustomPolicy(tagName);
+        if (null == policy) {
+            policy = config.getDefaultPolicy(sign);
+        }
+        return null == policy ? config.getTemplatePolicy(this.getClass()) : policy;
+    }
 
 }

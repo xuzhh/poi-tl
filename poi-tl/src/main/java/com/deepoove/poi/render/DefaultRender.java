@@ -15,15 +15,7 @@
  */
 package com.deepoove.poi.render;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
-
-import org.apache.commons.lang3.time.StopWatch;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.deepoove.poi.PoiTemplate;
 import com.deepoove.poi.XWPFTemplate;
 import com.deepoove.poi.exception.RenderException;
 import com.deepoove.poi.policy.DocxRenderPolicy;
@@ -35,10 +27,18 @@ import com.deepoove.poi.render.processor.LogProcessor;
 import com.deepoove.poi.template.MetaTemplate;
 import com.deepoove.poi.template.run.RunTemplate;
 import com.deepoove.poi.xwpf.NiceXWPFDocument;
+import org.apache.commons.lang3.time.StopWatch;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * default render
- * 
+ *
  * @author Sayi
  * @since 1.7.0
  */
@@ -50,7 +50,7 @@ public class DefaultRender implements Render {
     }
 
     @Override
-    public void render(XWPFTemplate template, Object root) {
+    public void render(PoiTemplate<?> template, Object root) {
         Objects.requireNonNull(template, "Template must not be null.");
         Objects.requireNonNull(root, "Data root must not be null");
 
@@ -62,7 +62,9 @@ public class DefaultRender implements Render {
 
             watch.start();
             renderTemplate(template, renderDataCompute);
-            renderInclude(template, renderDataCompute);
+            if (template instanceof XWPFTemplate) {
+                renderInclude((XWPFTemplate) template, renderDataCompute);
+            }
 
         } catch (Exception e) {
             if (e instanceof RenderException) throw (RenderException) e;
@@ -73,7 +75,7 @@ public class DefaultRender implements Render {
         LOGGER.info("Successfully Render template in {} millis", TimeUnit.NANOSECONDS.toMillis(watch.getNanoTime()));
     }
 
-    private void renderTemplate(XWPFTemplate template, RenderDataCompute renderDataCompute) {
+    private void renderTemplate(PoiTemplate<?> template, RenderDataCompute renderDataCompute) {
         // log
         new LogProcessor().process(template.getElementTemplates());
 
@@ -100,7 +102,7 @@ public class DefaultRender implements Render {
         List<MetaTemplate> elementTemplates = template.getElementTemplates();
         int k = 0;
         while (k < elementTemplates.size()) {
-            for (int j = 0; j < elementTemplates.size(); k=++j) {
+            for (int j = 0; j < elementTemplates.size(); k = ++j) {
                 MetaTemplate metaTemplate = elementTemplates.get(j);
                 if (!(metaTemplate instanceof RunTemplate)) continue;
                 RunTemplate runTemplate = (RunTemplate) metaTemplate;

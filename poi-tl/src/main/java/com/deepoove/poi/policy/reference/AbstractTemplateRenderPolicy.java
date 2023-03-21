@@ -15,7 +15,7 @@
  */
 package com.deepoove.poi.policy.reference;
 
-import com.deepoove.poi.XWPFTemplate;
+import com.deepoove.poi.PoiTemplate;
 import com.deepoove.poi.exception.RenderException;
 import com.deepoove.poi.policy.RenderPolicy;
 import com.deepoove.poi.template.ElementTemplate;
@@ -24,7 +24,7 @@ public abstract class AbstractTemplateRenderPolicy<E extends ElementTemplate, T>
 
     @SuppressWarnings("unchecked")
     @Override
-    public void render(ElementTemplate eleTemplate, Object data, XWPFTemplate template) {
+    public void render(ElementTemplate eleTemplate, Object data, PoiTemplate<?> template) {
         if (null == data) return;
         // type safe
         T model = null;
@@ -45,6 +45,6 @@ public abstract class AbstractTemplateRenderPolicy<E extends ElementTemplate, T>
 
     }
 
-    public abstract void doRender(E eleTemplate, T data, XWPFTemplate template) throws Exception;
+    public abstract void doRender(E eleTemplate, T data, PoiTemplate<?> template) throws Exception;
 
 }

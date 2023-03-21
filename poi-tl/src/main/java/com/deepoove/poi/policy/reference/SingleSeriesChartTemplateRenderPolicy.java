@@ -17,13 +17,13 @@ package com.deepoove.poi.policy.reference;
 
 import java.util.Arrays;
 
+import com.deepoove.poi.PoiTemplate;
+import org.apache.poi.xddf.usermodel.chart.XDDFChart;
 import org.apache.poi.xddf.usermodel.chart.XDDFChartData;
 import org.apache.poi.xddf.usermodel.chart.XDDFDataSource;
 import org.apache.poi.xddf.usermodel.chart.XDDFNumericalDataSource;
 import org.apache.poi.xddf.usermodel.chart.XDDFScatterChartData;
-import org.apache.poi.xwpf.usermodel.XWPFChart;
 
-import com.deepoove.poi.XWPFTemplate;
 import com.deepoove.poi.data.ChartSingleSeriesRenderData;
 import com.deepoove.poi.data.SeriesRenderData;
 import com.deepoove.poi.template.ChartTemplate;
@@ -38,9 +38,9 @@ public class SingleSeriesChartTemplateRenderPolicy
         extends AbstractChartTemplateRenderPolicy<ChartSingleSeriesRenderData> {
 
     @Override
-    public void doRender(ChartTemplate eleTemplate, ChartSingleSeriesRenderData data, XWPFTemplate template)
+    public void doRender(ChartTemplate eleTemplate, ChartSingleSeriesRenderData data, PoiTemplate<?> template)
             throws Exception {
-        XWPFChart chart = eleTemplate.getChart();
+        XDDFChart chart = eleTemplate.getChart();
         XDDFChartData pie = ChartUtils.getChartSeries(chart).get(0);
         SeriesRenderData seriesDatas = data.getSeriesData();
 

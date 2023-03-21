@@ -16,43 +16,42 @@
 
 package com.deepoove.poi.util;
 
+import com.deepoove.poi.xwpf.XDDFOfPieChartData;
+import org.apache.poi.xddf.usermodel.chart.XDDFChart;
+import org.apache.poi.xddf.usermodel.chart.XDDFChartData;
+import org.apache.poi.xddf.usermodel.chart.XDDFValueAxis;
+import org.openxmlformats.schemas.drawingml.x2006.chart.CTOfPieChart;
+import org.openxmlformats.schemas.drawingml.x2006.chart.CTPlotArea;
+import org.openxmlformats.schemas.drawingml.x2006.chart.CTValAx;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.poi.xddf.usermodel.chart.XDDFChartData;
-import org.apache.poi.xddf.usermodel.chart.XDDFValueAxis;
-import org.apache.poi.xwpf.usermodel.XWPFChart;
-import org.openxmlformats.schemas.drawingml.x2006.chart.CTOfPieChart;
-import org.openxmlformats.schemas.drawingml.x2006.chart.CTPlotArea;
-import org.openxmlformats.schemas.drawingml.x2006.chart.CTValAx;
-
-import com.deepoove.poi.xwpf.XDDFOfPieChartData;
-
 public final class ChartUtils {
 
-    public static List<XDDFChartData> getChartSeries(XWPFChart chart) {
-        List<XDDFChartData> series = new LinkedList<>();
-        List<XDDFChartData> chartSeries = chart.getChartSeries();
-        series.addAll(chartSeries);
-        CTPlotArea plotArea = chart.getCTChart().getPlotArea();
-        for (int i = 0; i < plotArea.sizeOfOfPieChartArray(); i++) {
-            CTOfPieChart barChart = plotArea.getOfPieChartArray(i);
-            series.add(new XDDFOfPieChartData(chart, barChart));
-        }
-        return series;
-    }
-    
-    public static Map<Long, XDDFValueAxis> getValueAxes(XWPFChart chart) {
-        CTPlotArea plotArea = chart.getCTChart().getPlotArea();
-        int sizeOfArray = plotArea.sizeOfValAxArray();
-        Map<Long, XDDFValueAxis> axes = new HashMap<>(sizeOfArray);
-        for (int i = 0; i < sizeOfArray; i++) {
-            CTValAx values = plotArea.getValAxArray(i);
-            axes.put(values.getAxId().getVal(), new XDDFValueAxis(values));
-        }
-        return axes;
-    }
+	public static List<XDDFChartData> getChartSeries(XDDFChart chart) {
+		List<XDDFChartData> series = new LinkedList<>();
+		List<XDDFChartData> chartSeries = chart.getChartSeries();
+		series.addAll(chartSeries);
+		CTPlotArea plotArea = chart.getCTChart().getPlotArea();
+		for (int i = 0; i < plotArea.sizeOfOfPieChartArray(); i++) {
+			CTOfPieChart barChart = plotArea.getOfPieChartArray(i);
+			series.add(new XDDFOfPieChartData(chart, barChart));
+		}
+		return series;
+	}
+
+	public static Map<Long, XDDFValueAxis> getValueAxes(XDDFChart chart) {
+		CTPlotArea plotArea = chart.getCTChart().getPlotArea();
+		int sizeOfArray = plotArea.sizeOfValAxArray();
+		Map<Long, XDDFValueAxis> axes = new HashMap<>(sizeOfArray);
+		for (int i = 0; i < sizeOfArray; i++) {
+			CTValAx values = plotArea.getValAxArray(i);
+			axes.put(values.getAxId().getVal(), new XDDFValueAxis(values));
+		}
+		return axes;
+	}
 
 }

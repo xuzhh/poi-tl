@@ -16,11 +16,6 @@
 
 package com.deepoove.poi.render.processor;
 
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.deepoove.poi.XWPFTemplate;
 import com.deepoove.poi.render.compute.RenderDataCompute;
 import com.deepoove.poi.resolver.Resolver;
@@ -28,8 +23,12 @@ import com.deepoove.poi.template.IterableTemplate;
 import com.deepoove.poi.template.MetaTemplate;
 import com.deepoove.poi.xwpf.BodyContainer;
 import com.deepoove.poi.xwpf.BodyContainerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public abstract class AbstractIterableProcessor extends DefaultTemplateProcessor implements Iteration {
+import java.util.List;
+
+public abstract class AbstractIterableProcessor extends AbstractTemplateProcessor implements Iteration {
 
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 

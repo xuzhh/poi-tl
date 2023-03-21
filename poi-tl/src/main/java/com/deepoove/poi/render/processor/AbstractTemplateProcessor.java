@@ -15,10 +15,11 @@
  */
 package com.deepoove.poi.render.processor;
 
-import com.deepoove.poi.XWPFTemplate;
+import com.deepoove.poi.PoiTemplate;
 import com.deepoove.poi.render.compute.RenderDataCompute;
-import com.deepoove.poi.resolver.Resolver;
+import com.deepoove.poi.resolver.ExResolver;
 import com.deepoove.poi.template.ChartTemplate;
+import com.deepoove.poi.template.ElementTemplate;
 import com.deepoove.poi.template.InlineIterableTemplate;
 import com.deepoove.poi.template.IterableTemplate;
 import com.deepoove.poi.template.MetaTemplate;
@@ -26,14 +27,13 @@ import com.deepoove.poi.template.PictImageTemplate;
 import com.deepoove.poi.template.PictureTemplate;
 import com.deepoove.poi.template.run.RunTemplate;
 
-public abstract class DefaultTemplateProcessor implements Visitor {
+public abstract class AbstractTemplateProcessor implements Visitor {
 
-    protected XWPFTemplate template;
+    protected PoiTemplate<?> template;
     protected final RenderDataCompute renderDataCompute;
-    protected final Resolver resolver;
+    protected final ExResolver<?, ?> resolver;
 
-    public DefaultTemplateProcessor(XWPFTemplate template, final Resolver resolver,
-            final RenderDataCompute renderDataCompute) {
+    public AbstractTemplateProcessor(PoiTemplate<?> template, final ExResolver<?, ?> resolver, final RenderDataCompute renderDataCompute) {
         this.template = template;
         this.resolver = resolver;
         this.renderDataCompute = renderDataCompute;
@@ -67,6 +67,11 @@ public abstract class DefaultTemplateProcessor implements Visitor {
     @Override
     public void visit(IterableTemplate iterableTemplate) {
         visitOther(iterableTemplate);
+    }
+
+    @Override
+    public void visit(ElementTemplate elementTemplate) {
+        visitOther(elementTemplate);
     }
 
     protected void visitOther(MetaTemplate template) {

@@ -17,6 +17,7 @@
 package com.deepoove.poi.render.processor;
 
 import com.deepoove.poi.template.ChartTemplate;
+import com.deepoove.poi.template.ElementTemplate;
 import com.deepoove.poi.template.InlineIterableTemplate;
 import com.deepoove.poi.template.IterableTemplate;
 import com.deepoove.poi.template.PictImageTemplate;
@@ -30,44 +31,61 @@ public interface Visitor {
 
     /**
      * visit run template
-     * 
+     *
      * @param runTemplate
      */
-    void visit(RunTemplate runTemplate);
+    default void visit(RunTemplate runTemplate) {
+        visit((ElementTemplate) runTemplate);
+    }
 
     /**
      * visit iterable template
-     * 
+     *
      * @param iterableTemplate
      */
     void visit(IterableTemplate iterableTemplate);
 
     /**
      * visit inline iterable template
-     * 
+     *
      * @param iterableTemplate
      */
-    void visit(InlineIterableTemplate iterableTemplate);
+    default void visit(InlineIterableTemplate iterableTemplate) {
+        visit((IterableTemplate) iterableTemplate);
+    }
 
     /**
      * visit picture template
-     * 
+     *
      * @param pictureTemplate
      */
-    void visit(PictureTemplate pictureTemplate);
+    default void visit(PictureTemplate pictureTemplate) {
+        visit((ElementTemplate) pictureTemplate);
+    }
 
     /**
      * visit pictImage template
-     * 
+     *
      * @param pictImageTemplate
      */
-    void visit(PictImageTemplate pictImageTemplate);
+    default void visit(PictImageTemplate pictImageTemplate) {
+        visit((ElementTemplate) pictImageTemplate);
+    }
 
     /**
      * visit chart template
-     * 
+     *
      * @param referenceTemplate
      */
-    void visit(ChartTemplate referenceTemplate);
+    default void visit(ChartTemplate referenceTemplate) {
+        visit((ElementTemplate) referenceTemplate);
+    }
+
+    /**
+     * visit element template
+     *
+     * @param elementTemplate
+     */
+    void visit(ElementTemplate elementTemplate);
 
 }

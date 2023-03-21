@@ -15,10 +15,11 @@
  */
 package com.deepoove.poi.policy.reference;
 
+import com.deepoove.poi.PoiTemplate;
+import com.deepoove.poi.XWPFTemplate;
 import org.apache.poi.xwpf.usermodel.XWPFHeaderFooter;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 
-import com.deepoove.poi.XWPFTemplate;
 import com.deepoove.poi.data.PictureRenderData;
 import com.deepoove.poi.data.PictureType;
 import com.deepoove.poi.template.PictImageTemplate;
@@ -28,8 +29,9 @@ public class DefaultPictImageTemplateRenderPolicy
         extends AbstractTemplateRenderPolicy<PictImageTemplate, PictureRenderData> {
 
     @Override
-    public void doRender(PictImageTemplate pictImageTemplate, PictureRenderData data, XWPFTemplate template)
+    public void doRender(PictImageTemplate pictImageTemplate, PictureRenderData data, PoiTemplate<?> template)
             throws Exception {
+        XWPFTemplate tpl = (XWPFTemplate) template;
         CTPictWrapper t = pictImageTemplate.getPicture();
         byte[] image = data.readPictureData();
         PictureType pictureType = data.getPictureType();
@@ -41,7 +43,7 @@ public class DefaultPictImageTemplateRenderPolicy
             XWPFHeaderFooter headerFooter = (XWPFHeaderFooter) run.getParent().getPart();
             setPictureReference(t, headerFooter.addPictureData(image, pictureType.type()));
         } else {
-            setPictureReference(t, template.getXWPFDocument().addPictureData(image, pictureType.type()));
+            setPictureReference(t, tpl.getXWPFDocument().addPictureData(image, pictureType.type()));
         }
     }
 

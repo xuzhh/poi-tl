@@ -15,33 +15,45 @@
  */
 package com.deepoove.poi.resolver;
 
-import java.util.List;
-
+import com.deepoove.poi.template.MetaTemplate;
+import org.apache.poi.ooxml.POIXMLDocumentPart;
 import org.apache.poi.xwpf.usermodel.IBodyElement;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 
-import com.deepoove.poi.template.MetaTemplate;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Resolver document and part
- * 
+ *
  * @author Sayi
- * @version
  */
-public interface Resolver {
+public interface Resolver extends ExResolver<XWPFDocument, POIXMLDocumentPart> {
 
     /**
      * resolve document
-     * 
-     * @param doc
-     * @return
+     *
+     * @param doc document
+     * @return list of {@link MetaTemplate}
      */
+    @Override
     List<MetaTemplate> resolveDocument(XWPFDocument doc);
 
     /**
+     * resolve document elements
+     *
+     * @param elements document elements
+     * @return list of {@link MetaTemplate}
+     */
+    @Override
+    default List<MetaTemplate> resolveDocumentParts(List<? extends POIXMLDocumentPart> elements) {
+        return Collections.emptyList();
+    }
+
+    /**
      * resolve body elements
-     * 
+     *
      * @param bodyElements
      * @return
      */
@@ -49,7 +61,7 @@ public interface Resolver {
 
     /**
      * resolve runs at same paragraph
-     * 
+     *
      * @param runs
      * @return
      */

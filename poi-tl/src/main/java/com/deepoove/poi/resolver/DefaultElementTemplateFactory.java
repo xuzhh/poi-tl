@@ -16,18 +16,17 @@
 
 package com.deepoove.poi.resolver;
 
-import java.util.Set;
-
-import org.apache.poi.xwpf.usermodel.XWPFChart;
-import org.apache.poi.xwpf.usermodel.XWPFPicture;
-import org.apache.poi.xwpf.usermodel.XWPFRun;
-
 import com.deepoove.poi.config.Configure;
 import com.deepoove.poi.template.ChartTemplate;
 import com.deepoove.poi.template.PictImageTemplate;
 import com.deepoove.poi.template.PictureTemplate;
 import com.deepoove.poi.template.run.RunTemplate;
 import com.deepoove.poi.xwpf.CTPictWrapper;
+import org.apache.poi.xddf.usermodel.chart.XDDFChart;
+import org.apache.poi.xwpf.usermodel.XWPFPicture;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
+
+import java.util.Set;
 
 /**
  * @author Sayi
@@ -71,7 +70,7 @@ public class DefaultElementTemplateFactory implements ElementTemplateFactory {
     }
 
     @Override
-    public ChartTemplate createChartTemplate(Configure config, String tag, XWPFChart chart, XWPFRun run) {
+    public ChartTemplate createChartTemplate(Configure config, String tag, XDDFChart chart, XWPFRun run) {
         ChartTemplate template = new ChartTemplate(tag, chart, run);
         template.setSource(config.getGramerPrefix() + tag + config.getGramerSuffix());
         template.setSign(EMPTY_CHAR);

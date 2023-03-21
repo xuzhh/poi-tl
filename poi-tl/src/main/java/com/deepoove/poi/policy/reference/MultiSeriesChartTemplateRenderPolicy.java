@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import com.deepoove.poi.PoiTemplate;
 import org.apache.poi.xddf.usermodel.chart.XDDFAreaChartData;
 import org.apache.poi.xddf.usermodel.chart.XDDFBarChartData;
 import org.apache.poi.xddf.usermodel.chart.XDDFChart;
@@ -31,9 +32,7 @@ import org.apache.poi.xddf.usermodel.chart.XDDFLineChartData;
 import org.apache.poi.xddf.usermodel.chart.XDDFNumericalDataSource;
 import org.apache.poi.xddf.usermodel.chart.XDDFScatterChartData;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xwpf.usermodel.XWPFChart;
 
-import com.deepoove.poi.XWPFTemplate;
 import com.deepoove.poi.data.ChartMultiSeriesRenderData;
 import com.deepoove.poi.data.SeriesRenderData;
 import com.deepoove.poi.data.SeriesRenderData.ComboType;
@@ -50,9 +49,9 @@ public class MultiSeriesChartTemplateRenderPolicy
         extends AbstractChartTemplateRenderPolicy<ChartMultiSeriesRenderData> {
 
     @Override
-    public void doRender(ChartTemplate eleTemplate, ChartMultiSeriesRenderData data, XWPFTemplate template)
+    public void doRender(ChartTemplate eleTemplate, ChartMultiSeriesRenderData data, PoiTemplate<?> template)
             throws Exception {
-        XWPFChart chart = eleTemplate.getChart();
+        XDDFChart chart = eleTemplate.getChart();
         List<XDDFChartData> chartSeries = chart.getChartSeries();
         validate(chartSeries, data);
 
@@ -114,7 +113,7 @@ public class MultiSeriesChartTemplateRenderPolicy
     protected void processNewSeries(XDDFChartData chartData, Series addSeries) {
     }
 
-    private int ensureSeriesCount(XWPFChart chart, List<XDDFChartData> chartSeries) throws IllegalAccessException {
+    private int ensureSeriesCount(XDDFChart chart, List<XDDFChartData> chartSeries) throws IllegalAccessException {
         // hack for poi 4.1.1+: repair seriesCount value,
         int totalSeriesCount = chartSeries.stream().mapToInt(XDDFChartData::getSeriesCount).sum();
         Field field = ReflectionUtils.findField(XDDFChart.class, "seriesCount");

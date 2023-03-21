@@ -16,18 +16,18 @@
 
 package com.deepoove.poi.render.processor;
 
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.deepoove.poi.template.ChartTemplate;
+import com.deepoove.poi.template.ElementTemplate;
 import com.deepoove.poi.template.InlineIterableTemplate;
 import com.deepoove.poi.template.IterableTemplate;
 import com.deepoove.poi.template.MetaTemplate;
 import com.deepoove.poi.template.PictImageTemplate;
 import com.deepoove.poi.template.PictureTemplate;
 import com.deepoove.poi.template.run.RunTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class LogProcessor implements Visitor {
 
@@ -77,6 +77,11 @@ public class LogProcessor implements Visitor {
     @Override
     public void visit(ChartTemplate chartTemplate) {
         log.info("{}{}", indentState, chartTemplate);
+    }
+
+    @Override
+    public void visit(ElementTemplate elementTemplate) {
+        log.info("{}{}", indentState, elementTemplate);
     }
 
 }

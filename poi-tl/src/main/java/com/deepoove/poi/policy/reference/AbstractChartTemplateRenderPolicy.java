@@ -32,7 +32,6 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFTable;
-import org.apache.poi.xwpf.usermodel.XWPFChart;
 import org.openxmlformats.schemas.drawingml.x2006.chart.CTAxDataSource;
 import org.openxmlformats.schemas.drawingml.x2006.chart.CTTitle;
 import org.openxmlformats.schemas.drawingml.x2006.chart.CTTx;
@@ -51,12 +50,12 @@ public abstract class AbstractChartTemplateRenderPolicy<T> extends AbstractTempl
 
     protected final int FIRST_ROW = 1;
 
-    protected XDDFDataSource<?> createStringDataSource(XWPFChart chart, String[] categories, int col) {
+    protected XDDFDataSource<?> createStringDataSource(XDDFChart chart, String[] categories, int col) {
         return XDDFDataSourcesFactory.fromArray(categories,
                 chart.formatRange(new CellRangeAddress(FIRST_ROW, categories.length, col, col)), col);
     }
 
-    protected <N extends Number> XDDFNumericalDataSource<Number> createNumbericalDataSource(XWPFChart chart, N[] data,
+    protected <N extends Number> XDDFNumericalDataSource<Number> createNumbericalDataSource(XDDFChart chart, N[] data,
             int col) {
         return XDDFDataSourcesFactory.fromArray(data,
                 chart.formatRange(new CellRangeAddress(FIRST_ROW, data.length, col, col)), col);
@@ -125,7 +124,7 @@ public abstract class AbstractChartTemplateRenderPolicy<T> extends AbstractTempl
     }
 
     @SuppressWarnings("deprecation")
-    protected void plot(XWPFChart chart, XDDFChartData data) throws Exception {
+    protected void plot(XDDFChart chart, XDDFChartData data) throws Exception {
         XSSFSheet sheet = chart.getWorkbook().getSheetAt(0);
         Method method = XDDFChart.class.getDeclaredMethod("fillSheet", XSSFSheet.class, XDDFDataSource.class,
                 XDDFNumericalDataSource.class);
@@ -148,7 +147,7 @@ public abstract class AbstractChartTemplateRenderPolicy<T> extends AbstractTempl
         }
     }
 
-    protected void setTitle(XWPFChart chart, String title) {
+    protected void setTitle(XDDFChart chart, String title) {
         if (null == title && chart.getCTChart().isSetTitle()) {
             chart.getCTChart().unsetTitle();
             return;
@@ -161,7 +160,7 @@ public abstract class AbstractChartTemplateRenderPolicy<T> extends AbstractTempl
         }
     }
 
-    protected void setAxisTitle(XWPFChart chart, String xAxisTitle, String yAxisTitle) {
+    protected void setAxisTitle(XDDFChart chart, String xAxisTitle, String yAxisTitle) {
         if (null == xAxisTitle && null == yAxisTitle) return;
         Map<Long, XDDFValueAxis> valueAxes = ChartUtils.getValueAxes(chart);
         if (valueAxes.isEmpty()) return;

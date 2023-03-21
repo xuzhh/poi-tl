@@ -50,7 +50,7 @@ public class DocxRenderPolicy extends AbstractRenderPolicy<DocxRenderData> {
     @Override
     public void doRender(RenderContext<DocxRenderData> context) throws Exception {
         NiceXWPFDocument doc = context.getXWPFDocument();
-        XWPFTemplate template = context.getTemplate();
+        XWPFTemplate template = (XWPFTemplate) context.getTemplate();
         doc = doc.merge(new XWPFDocumentIterator(context.getData(), context.getConfig()), context.getRun());
         template.reload(doc);
     }

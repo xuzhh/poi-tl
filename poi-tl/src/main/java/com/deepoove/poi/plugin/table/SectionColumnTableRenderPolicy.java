@@ -15,8 +15,12 @@
  */
 package com.deepoove.poi.plugin.table;
 
-import java.util.List;
-
+import com.deepoove.poi.PoiTemplate;
+import com.deepoove.poi.exception.RenderException;
+import com.deepoove.poi.policy.RenderPolicy;
+import com.deepoove.poi.template.ElementTemplate;
+import com.deepoove.poi.template.run.RunTemplate;
+import com.deepoove.poi.util.TableTools;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
@@ -27,21 +31,15 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTcPr;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTVMerge;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
 
-import com.deepoove.poi.XWPFTemplate;
-import com.deepoove.poi.exception.RenderException;
-import com.deepoove.poi.policy.RenderPolicy;
-import com.deepoove.poi.template.ElementTemplate;
-import com.deepoove.poi.template.run.RunTemplate;
-import com.deepoove.poi.util.TableTools;
+import java.util.List;
 
 /**
- * 
  * @author Sayi
  */
 public class SectionColumnTableRenderPolicy implements RenderPolicy {
 
     @Override
-    public void render(ElementTemplate eleTemplate, Object data, XWPFTemplate template) {
+    public void render(ElementTemplate eleTemplate, Object data, PoiTemplate<?> template) {
         RunTemplate runTemplate = (RunTemplate) eleTemplate;
         XWPFRun run = runTemplate.getRun();
         try {
@@ -57,7 +55,7 @@ public class SectionColumnTableRenderPolicy implements RenderPolicy {
 //                table.removeRow(templateRowIndex);
 //                tagCell.setText("_delete_");
                 run.setText("_delete_", 0);
-                
+
                 CTTcPr tcPr = TableTools.getTcPr(tagCell);
                 CTVMerge vMerge = tcPr.getVMerge();
                 System.out.println(null == vMerge ? null : vMerge.getVal());
@@ -67,9 +65,9 @@ public class SectionColumnTableRenderPolicy implements RenderPolicy {
                     XWPFTableCell actualCell = row.getCell(actualInsertPosition);
                     System.out.println(actualCell.getCTTc());
                     actualCell.getParagraphArray(0).createRun().setText("_delete_", 0);
-                    
+
                 }
-                
+
             } else {
                 run.setText("", 0);
             }
@@ -87,7 +85,7 @@ public class SectionColumnTableRenderPolicy implements RenderPolicy {
         List<XWPFTableRow> rows = row.getTable().getRows();
         return rows.indexOf(row);
     }
-    
+
     private int getColIndex(XWPFTableCell cell) {
         XWPFTableRow tableRow = cell.getTableRow();
         int orginalCol = 0;
@@ -106,7 +104,7 @@ public class SectionColumnTableRenderPolicy implements RenderPolicy {
         }
         return -1;
     }
-    
+
     private int getActualInsertPosition(XWPFTableRow tableRow, int insertPosition) {
         int orginalCol = 0;
         for (int i = 0; i < tableRow.getTableCells().size(); i++) {

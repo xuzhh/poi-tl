@@ -15,16 +15,15 @@
  */
 package com.deepoove.poi.resolver;
 
-import org.apache.poi.xwpf.usermodel.XWPFChart;
-import org.apache.poi.xwpf.usermodel.XWPFPicture;
-import org.apache.poi.xwpf.usermodel.XWPFRun;
-
 import com.deepoove.poi.config.Configure;
 import com.deepoove.poi.template.ChartTemplate;
 import com.deepoove.poi.template.PictImageTemplate;
 import com.deepoove.poi.template.PictureTemplate;
 import com.deepoove.poi.template.run.RunTemplate;
 import com.deepoove.poi.xwpf.CTPictWrapper;
+import org.apache.poi.xddf.usermodel.chart.XDDFChart;
+import org.apache.poi.xwpf.usermodel.XWPFPicture;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 /**
  * Factory to create Element template
@@ -39,6 +38,6 @@ public interface ElementTemplateFactory {
 
     PictImageTemplate createPictImageTemplate(Configure config, String tag, CTPictWrapper pic, XWPFRun run);
 
-    ChartTemplate createChartTemplate(Configure config, String tag, XWPFChart chart, XWPFRun run);
+    ChartTemplate createChartTemplate(Configure config, String tag, XDDFChart chart, XWPFRun run);
 
 }

@@ -15,18 +15,14 @@
  */
 package com.deepoove.poi.render.processor;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-
+import com.deepoove.poi.PoiTemplate;
 import com.deepoove.poi.XWPFTemplate;
 import com.deepoove.poi.render.compute.RenderDataCompute;
+import com.deepoove.poi.resolver.ExResolver;
 import com.deepoove.poi.resolver.Resolver;
 import com.deepoove.poi.template.BlockTemplate;
 import com.deepoove.poi.template.ChartTemplate;
+import com.deepoove.poi.template.ElementTemplate;
 import com.deepoove.poi.template.InlineIterableTemplate;
 import com.deepoove.poi.template.IterableTemplate;
 import com.deepoove.poi.template.MetaTemplate;
@@ -34,12 +30,17 @@ import com.deepoove.poi.template.PictImageTemplate;
 import com.deepoove.poi.template.PictureTemplate;
 import com.deepoove.poi.template.run.RunTemplate;
 import com.deepoove.poi.xwpf.XWPFTextboxContent;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Process all templates of the document
- * 
- * @author Sayi
  *
+ * @author Sayi
  */
 public class DocumentProcessor implements Visitor {
 
@@ -47,11 +48,13 @@ public class DocumentProcessor implements Visitor {
     private IterableProcessor iterableProcessor;
     private InlineIterableProcessor inlineIterableProcessor;
 
-    public DocumentProcessor(XWPFTemplate template, final Resolver resolver,
+    public DocumentProcessor(PoiTemplate<?> template, final ExResolver<?, ?> resolver,
             final RenderDataCompute renderDataCompute) {
         elementProcessor = new ElementProcessor(template, resolver, renderDataCompute);
-        iterableProcessor = new IterableProcessor(template, resolver, renderDataCompute);
-        inlineIterableProcessor = new InlineIterableProcessor(template, resolver, renderDataCompute);
+        if (template instanceof XWPFTemplate) {
+            iterableProcessor = new IterableProcessor((XWPFTemplate) template, (Resolver) resolver, renderDataCompute);
+            inlineIterableProcessor = new InlineIterableProcessor((XWPFTemplate) template, (Resolver) resolver, renderDataCompute);
+        }
     }
 
     public void process(List<MetaTemplate> templates) {
@@ -108,6 +111,11 @@ public class DocumentProcessor implements Visitor {
     @Override
     public void visit(ChartTemplate chartTemplate) {
         chartTemplate.accept(elementProcessor);
+    }
+
+    @Override
+    public void visit(ElementTemplate elementTemplate) {
+        elementTemplate.accept(elementProcessor);
     }
 
 }

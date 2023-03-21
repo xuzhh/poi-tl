@@ -15,18 +15,17 @@
  */
 package com.deepoove.poi.policy;
 
-import org.apache.commons.lang3.ClassUtils;
-import org.apache.poi.xwpf.usermodel.XWPFRun;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.deepoove.poi.XWPFTemplate;
+import com.deepoove.poi.PoiTemplate;
 import com.deepoove.poi.config.Configure.ValidErrorHandler;
 import com.deepoove.poi.exception.RenderException;
 import com.deepoove.poi.render.RenderContext;
 import com.deepoove.poi.template.ElementTemplate;
 import com.deepoove.poi.xwpf.BodyContainer;
 import com.deepoove.poi.xwpf.BodyContainerFactory;
+import org.apache.commons.lang3.ClassUtils;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * General logic for data verification, rendering, clearing template tags, and
@@ -45,7 +44,7 @@ public abstract class AbstractRenderPolicy<T> implements RenderPolicy {
     }
 
     @Override
-    public void render(ElementTemplate eleTemplate, Object data, XWPFTemplate template) {
+    public void render(ElementTemplate eleTemplate, Object data, PoiTemplate<?> template) {
         T model = null;
         try {
             model = cast(data);
@@ -53,7 +52,7 @@ public abstract class AbstractRenderPolicy<T> implements RenderPolicy {
             throw new RenderException("Error Render Data format for template: " + eleTemplate.getSource(), e);
         }
 
-        RenderContext<T> context = new RenderContext<T>(eleTemplate, model, template);
+        RenderContext<T> context = new RenderContext<>(eleTemplate, model, template);
         try {
             // validate
             if (!validate(model)) {

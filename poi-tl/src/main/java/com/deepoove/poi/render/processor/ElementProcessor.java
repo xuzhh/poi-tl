@@ -16,11 +16,11 @@
 
 package com.deepoove.poi.render.processor;
 
-import com.deepoove.poi.XWPFTemplate;
+import com.deepoove.poi.PoiTemplate;
 import com.deepoove.poi.policy.DocxRenderPolicy;
 import com.deepoove.poi.policy.RenderPolicy;
 import com.deepoove.poi.render.compute.RenderDataCompute;
-import com.deepoove.poi.resolver.Resolver;
+import com.deepoove.poi.resolver.ExResolver;
 import com.deepoove.poi.template.ChartTemplate;
 import com.deepoove.poi.template.ElementTemplate;
 import com.deepoove.poi.template.PictImageTemplate;
@@ -29,13 +29,12 @@ import com.deepoove.poi.template.run.RunTemplate;
 
 /**
  * process element template
- * 
- * @author Sayi
  *
+ * @author Sayi
  */
-public class ElementProcessor extends DefaultTemplateProcessor {
+public class ElementProcessor extends AbstractTemplateProcessor {
 
-    public ElementProcessor(XWPFTemplate template, Resolver resolver, RenderDataCompute renderDataCompute) {
+    public ElementProcessor(PoiTemplate<?> template, ExResolver<?, ?> resolver, RenderDataCompute renderDataCompute) {
         super(template, resolver, renderDataCompute);
     }
 
@@ -59,9 +58,10 @@ public class ElementProcessor extends DefaultTemplateProcessor {
         visit((ElementTemplate) runTemplate);
     }
 
-    void visit(ElementTemplate eleTemplate) {
+    @Override
+    public void visit(ElementTemplate eleTemplate) {
         RenderPolicy policy = eleTemplate.findPolicy(template.getConfig());
-        if (null != policy && policy instanceof DocxRenderPolicy) return;
+        if (policy instanceof DocxRenderPolicy) return;
         DelegatePolicy.invoke(policy, eleTemplate, renderDataCompute.compute(eleTemplate.getTagName()), template);
     }
 

@@ -32,7 +32,7 @@ public class ReflectionException extends RuntimeException {
     }
 
     public ReflectionException(String name, Class<?> clazz, Exception e) {
-        this("Error Reflect " + name + "from class " + ClassUtils.getShortClassName(clazz), e);
+        this("Error Reflect " + name + " from class " + ClassUtils.getShortClassName(clazz), e);
     }
 
 }

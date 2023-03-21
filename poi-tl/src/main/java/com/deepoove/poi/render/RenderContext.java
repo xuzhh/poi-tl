@@ -15,33 +15,37 @@
  */
 package com.deepoove.poi.render;
 
-import org.apache.poi.xwpf.usermodel.IBody;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.apache.poi.xwpf.usermodel.XWPFRun;
-
+import com.deepoove.poi.PoiTemplate;
 import com.deepoove.poi.XWPFTemplate;
 import com.deepoove.poi.config.Configure;
 import com.deepoove.poi.template.ElementTemplate;
 import com.deepoove.poi.template.run.RunTemplate;
 import com.deepoove.poi.xwpf.NiceXWPFDocument;
+import org.apache.poi.xwpf.usermodel.IBody;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 /**
  * Template context
- * 
+ *
  * @author Sayi
  */
 public class RenderContext<T> {
 
     private final ElementTemplate eleTemplate;
     private final T data;
-    private final XWPFTemplate template;
+    private final PoiTemplate<?> template;
     private final WhereDelegate where;
 
-    public RenderContext(ElementTemplate eleTemplate, T data, XWPFTemplate template) {
+    public RenderContext(ElementTemplate eleTemplate, T data, PoiTemplate<?> template) {
         this.eleTemplate = eleTemplate;
         this.data = data;
         this.template = template;
-        where = new WhereDelegate(((RunTemplate) this.eleTemplate).getRun());
+        if (eleTemplate instanceof RunTemplate) {
+            where = new WhereDelegate(((RunTemplate) this.eleTemplate).getRun());
+        } else {
+            where = null;
+        }
     }
 
     public ElementTemplate getEleTemplate() {
@@ -56,12 +60,12 @@ public class RenderContext<T> {
         return data;
     }
 
-    public XWPFTemplate getTemplate() {
+    public PoiTemplate<?> getTemplate() {
         return template;
     }
 
     public NiceXWPFDocument getXWPFDocument() {
-        return this.template.getXWPFDocument();
+        return template instanceof XWPFTemplate ? ((XWPFTemplate) template).getXWPFDocument() : null;
     }
 
     public WhereDelegate getWhereDelegate() {
@@ -85,7 +89,7 @@ public class RenderContext<T> {
         return getTemplate().getConfig();
     }
 
-    public Object getTagSource() {
+    public String getTagSource() {
         return getEleTemplate().getSource();
     }
 
