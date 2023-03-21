@@ -11,7 +11,7 @@
 
 	<groupId>com.deepoove</groupId>
 	<artifactId>poi-tl</artifactId>
-	<version>1.12.2-SNAPSHOT</version>
+	<version>1.13.0</version>
 	<packaging>jar</packaging>
 
 	<name>poi-tl</name>
@@ -184,30 +184,40 @@
 						</executions>
 					</plugin>
 					<!-- GPG -->
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-gpg-plugin</artifactId>
-						<version>1.5</version>
-						<executions>
-							<execution>
-								<phase>verify</phase>
-								<goals>
-									<goal>sign</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
+<!--					<plugin>-->
+<!--						<groupId>org.apache.maven.plugins</groupId>-->
+<!--						<artifactId>maven-gpg-plugin</artifactId>-->
+<!--						<version>1.5</version>-->
+<!--						<executions>-->
+<!--							<execution>-->
+<!--								<phase>verify</phase>-->
+<!--								<goals>-->
+<!--									<goal>sign</goal>-->
+<!--								</goals>-->
+<!--							</execution>-->
+<!--						</executions>-->
+<!--					</plugin>-->
 				</plugins>
 			</build>
+<!--			<distributionManagement>-->
+<!--				<snapshotRepository>-->
+<!--					<id>oss</id>-->
+<!--					<url>https://oss.sonatype.org/content/repositories/snapshots/</url>-->
+<!--				</snapshotRepository>-->
+<!--				<repository>-->
+<!--					<id>oss</id>-->
+<!--					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>-->
+<!--				</repository>-->
+<!--			</distributionManagement>-->
 			<distributionManagement>
-				<snapshotRepository>
-					<id>oss</id>
-					<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-				</snapshotRepository>
 				<repository>
-					<id>oss</id>
-					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+					<id>bd-hunan</id>
+					<url>http://10.1.4.161:8085/repository/bd-hunan/</url>
 				</repository>
+				<snapshotRepository>
+					<id>bd-hunan</id>
+					<url>http://10.1.4.161:8085/repository/bd-hunan/</url>
+				</snapshotRepository>
 			</distributionManagement>
 		</profile>
 	</profiles>
