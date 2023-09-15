@@ -29,4 +29,10 @@ complex.docx
 poi-tl-cli/target/
 poi-tl-jsonmodel-support/target/
 poi-tl/.DS_Store
-.DS_Store
+
+# unversiond module
+poi-ooxml-schemas-extra/
+poi-tl-jsonmodel-support/
+poi-tl-plugin-highlight/
+poi-tl-plugin-markdown/
+poi-tl-cli/
