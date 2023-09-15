@@ -15,7 +15,7 @@
  */
 package com.deepoove.poi.plugin.table;
 
-import com.deepoove.poi.XWPFTemplate;
+import com.deepoove.poi.PoiTemplate;
 import com.deepoove.poi.exception.RenderException;
 import com.deepoove.poi.policy.RenderPolicy;
 import com.deepoove.poi.render.compute.EnvModel;
@@ -52,15 +52,15 @@ import java.util.regex.Pattern;
  */
 public class MultipleColumnTableRenderPolicy implements RenderPolicy {
 
-    private final static String DEFAULT_MULTIPLE_PREFIX = "$(";
+    private static final String DEFAULT_MULTIPLE_PREFIX = "$(";
 
-    private final static String DEFAULT_MULTIPLE_SUFFIX = ")";
+    private static final String DEFAULT_MULTIPLE_SUFFIX = ")";
 
-    private final static String DEFAULT_PREFIX = "[";
+    private static final String DEFAULT_PREFIX = "[";
 
-    private final static String DEFAULT_SUFFIX = "]";
+    private static final String DEFAULT_SUFFIX = "]";
 
-    private final static int DEFAULT_MULTIPLE_COLUMN_NUM = 1;
+    private static final int DEFAULT_MULTIPLE_COLUMN_NUM = 1;
 
     private final String regex = "\\$\\([0-9]+\\)";
 
@@ -96,7 +96,7 @@ public class MultipleColumnTableRenderPolicy implements RenderPolicy {
     }
 
     @Override
-    public void render(ElementTemplate eleTemplate, Object data, XWPFTemplate template) {
+    public void render(ElementTemplate eleTemplate, Object data, PoiTemplate<?> template) {
 
         RunTemplate runTemplate = (RunTemplate) eleTemplate;
         XWPFRun run = runTemplate.getRun();
@@ -313,8 +313,9 @@ public class MultipleColumnTableRenderPolicy implements RenderPolicy {
             CTTcPr tcPr = current.getCTTc().getTcPr();
             if (null != tcPr) {
                 CTDecimalNumber gridSpan = tcPr.getGridSpan();
-                if (null != gridSpan)
+                if (null != gridSpan) {
                     intValue = gridSpan.getVal().intValue();
+                }
             }
             orginalCol += intValue;
             if (current.getCTTc() == cell.getCTTc()) {
@@ -332,8 +333,9 @@ public class MultipleColumnTableRenderPolicy implements RenderPolicy {
             CTTcPr tcPr = current.getCTTc().getTcPr();
             if (null != tcPr) {
                 CTDecimalNumber gridSpan = tcPr.getGridSpan();
-                if (null != gridSpan)
+                if (null != gridSpan) {
                     intValue = gridSpan.getVal().intValue();
+                }
             }
             orginalCol += intValue;
             if (orginalCol - intValue == insertPosition && intValue == 1) {
@@ -351,8 +353,9 @@ public class MultipleColumnTableRenderPolicy implements RenderPolicy {
             CTTcPr tcPr = current.getCTTc().getTcPr();
             if (null != tcPr) {
                 CTDecimalNumber gridSpan = tcPr.getGridSpan();
-                if (null != gridSpan)
+                if (null != gridSpan) {
                     intValue = gridSpan.getVal().intValue();
+                }
             }
             orginalCol += intValue;
             if (orginalCol - 1 >= insertPosition) {
